@@ -46,9 +46,9 @@ This should be still quite memorable. Maybe have a little story connecting these
 
 ### 2. Add salt
 
-This is a fairly long password and therefore be reasonably secure. However, in my opinion it can never hurt to add some more random salt to a password. Adding letters / numbers / characters *that are not found in any dictionary*, will make the a [dictionary attack](https://en.wikipedia.org/wiki/Dictionary_attack) against the password much more difficult. I typically use something personal like my last phone number or initials of my last address -- make it not too hard so that you still can remember. Let's assume I lived in Residential Queens street and my postal code was 07831. So I could chose: `RQ7831`. Now add the salt to an arbitrary position in the existing password, like `canoe_RQ7831_punch_wallet_bear`.
+This is a fairly long password and therefore be reasonably secure. However, in my opinion it can never hurt to add some more random salt to a password. Adding letters / numbers / characters *that are not found in any dictionary*, will make the a [dictionary attack](https://en.wikipedia.org/wiki/Dictionary_attack) against the password much more difficult. I typically use something personal like my last phone number or initials of my last address -- make it not too hard so that you still can remember. That information should not be publicly available anywhere on the internets. Let's assume I lived in Residential Queens street and my postal code was 07831. So I could chose: `RQ7831`. Now add the salt to an arbitrary position in the existing password, like `canoe_RQ7831_punch_wallet_bear`.
 
-### 3. Adaptabiliy
+### 3. Adaptability
 
 The resulting passphrase is pretty sophisticated but it should be still personal enough to remember. The next step is to add some customisable part that can be adapted for each site. Since the processing power of the human brain (at least for these kind of things) is rather limited, it should be something quite simple. 
 
