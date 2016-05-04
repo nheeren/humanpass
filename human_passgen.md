@@ -18,18 +18,18 @@ So, based on my past experiences and many articles I read on the issue, I today 
 
 ## Requirements
 
-So what makes a password secure *and* memorable? Many people use the same password everywhere. Whenever they are forced to obey some password rules, they may simply adapt it to the rules at hand. `password` becomes `Password123`. 
+So what makes a password secure *and* memorable? Many people use the same password everywhere. Whenever they are forced to obey some password scheme, they will simply adapt it to the rules at hand. for instance `password` becomes `Password123$`. 
 
-The problem with that is obvious: If your password is stolen from a site, the attacker would be able to login wherever you have an account. If the site or company where the password was stolen did observed some basic security rules, they will not store your password as is is, but only its hash. In the `password` case that would be `5f4dcc3b5aa765d61d8327deb882cf99`. But still the attacker will be able to quickly figure out your password by using rainbow tables or [Google](https://www.google.com/search?q=5f4dcc3b5aa765d61d8327deb882cf99). Security responsible sites will add a salt to the hash, but that is beyond the point here.
+The problem with that is obvious: If the password is stolen from a site, the attacker would be able to login wherever the user has an account. If the site or company where the password was stolen did observed some basic security rules, they will not store the password as is is, but only its hash. In the `password` case that would be `5f4dcc3b5aa765d61d8327deb882cf99`. But still the attacker will be able to quickly figure out the password by using rainbow tables or even [Google](https://www.google.com/search?q=5f4dcc3b5aa765d61d8327deb882cf99). Security responsible sites will add a salt to the hash, but that is beyond the point here.
 
-So the obvious solution is to use an individual password on each site or service. The lazy person's approach could be to use `password_ebay` for the ebay account. But the previous problem remains: If that password is stolen, it will be very easy to guess the pattern how the password was generated. It is likely that `password_amazon` will now also work for the Amazon account probably with the same mail address as user name.
+So the obvious solution is to use an individual password on each site or service. The lazy person's approach could be to use `password_ebay` for the ebay account. But the previous problem remains: If that password is stolen, it will be very easy to guess the pattern how the password was generated. It is likely that `password_amazon` will also work for the Amazon account probably with the same mail address as user name.
 
 So what we need is a password that is:
 
 1. Secure
-1. Memorable
-1. Adaptable
-1. Not have an obvious adaptation pattern
+2. Memorable
+3. Adaptable
+4. Not have an obvious adaptation pattern
 
 
 ## Algorithm
@@ -37,7 +37,8 @@ So what we need is a password that is:
 Get to the point already...
 
 ### 1. Choose password
-Use a password of you liking. [JGC's blog post](http://blog.jgc.org/2016/05/two-factor-paper-passwords.html) basically has all the advice. Use some words of your liking and combine them together in whatever way you want. So we choose something like
+
+Use a password of your liking. [JGC's blog post](http://blog.jgc.org/2016/05/two-factor-paper-passwords.html) has some great advice. Use some words that you like and combine them together in whatever way you want. So we can choose something like:
 
 `canoe_punch_wallet_bear`
 
@@ -45,26 +46,29 @@ This should be still quite memorable. Maybe have a little story connecting these
 
 ### 2. Add salt
 
-This is a long password and therefore be reasonably secure. However, in my opinion it can never hurt to add some more random salt to a password. Adding letters / numbers / characters that are not found in any dictionary, will make the a dictionary attack against the password much more difficult. I typically use something personal like my last phone number or initials of my last address -- make it not too hard so that you still can remember. Let's assume I lived in Residential Queens street and my postal code was 7831. So I could chose: `RQ7831`. Now add the salt to an arbitrary place in the existing password, like `canoe_RQ7831_punch_wallet_bear`.
+This is a fairly long password and therefore be reasonably secure. However, in my opinion it can never hurt to add some more random salt to a password. Adding letters / numbers / characters *that are not found in any dictionary*, will make the a [dictionary attack](https://en.wikipedia.org/wiki/Dictionary_attack) against the password much more difficult. I typically use something personal like my last phone number or initials of my last address -- make it not too hard so that you still can remember. Let's assume I lived in Residential Queens street and my postal code was 07831. So I could chose: `RQ7831`. Now add the salt to an arbitrary position in the existing password, like `canoe_RQ7831_punch_wallet_bear`.
 
 ### 3. Adaptabiliy
 
-Now the passphrase is pretty sophisticated but it should be still personal enough for you to remember. The next step is to add some customisable part that can adapted for each site. Since the processing power of the human brain (at least for these kind of things) is rather limited, it should be something quite simple. 
+The resulting passphrase is pretty sophisticated but it should be still personal enough to remember. The next step is to add some customisable part that can be adapted for each site. Since the processing power of the human brain (at least for these kind of things) is rather limited, it should be something quite simple. 
 
-One possibility would be to use the first and last letter of the site. To make it not too obvious one could choose the next letter in the alphabet for the first letter and a capital letter for the last. So for Amazon.com this would be `b` and `N`. 
+One idea would be to *use the first and last letter of the site*. To make it not too obvious one could *choose the next letter in the alphabet for the first letter and a capital letter for the last*. So for **A**mazo**n**.com this would be `b` and `N`. 
 
-The Amazon password is: `canoe_RQ7831bN_punch_wallet_bear`
-For ebay it would be: `canoe_RQ7831fY_punch_wallet_bear`. And so on.
+So the Amazon password is: `canoe_RQ7831bN_punch_wallet_bear`. For ebay it would be: `canoe_RQ7831fY_punch_wallet_bear`. And so on.
 
 Of course there are many variations that can be applied to different parts of the password. Like: *Use a capital letter for the service name's length*. E.g. for ebay (4 letters => capital `O`): `canOe_RQ7831_punch_wallet_bear`
 
-#### Power salt
+### Power salt
 
-Use extra power salt. It is not always necessary to have a super long password. Criteria are the time it takes to construct the specific password in the head and typing a very long password. It is also possible to use a short version for sites you consider less critical (e.g. `canoe_RQ7831`) or a long one for very critical ones like your GPG private key (e.g. `canoe_RQ7831hG_punch_wallet_bear-super_securitY`).
+Use extra power salt. It is not always necessary to have a super long password. Criteria are the time it takes to construct the specific password in the head and typing a very long password. It is also possible to use a short version for sites you consider less critical (e.g. `canoe_RQ7831`) or a long one for very critical ones like your [GPG](https://www.gnupg.org/) private key (e.g. `canoe_RQ7831hG_punch_wallet_bear-super_$ecuritY`).
+
+## Final words
+
+No matter how simple your HPM algorithm is, I still recommend saving the password in a non-human password store like [KeePass](http://keepass.info/), etc.
 
 ## More reading
 
 This is a collection of articles on the issue:
 
 - [Blog post by John Graham-Cumming](http://blog.jgc.org/2016/05/two-factor-paper-passwords.html). He motivated me to write down my thoughts on the issue.
-- [ArsTechnica article: Password complexity rules more annoying, less effective than lengthy ones](http://arstechnica.com/security/2013/06/password-complexity-rules-more-annoying-less-effective-than-length-ones/)
+- [ArsTechnica article](http://arstechnica.com/security/2013/06/password-complexity-rules-more-annoying-less-effective-than-length-ones/): Password complexity rules more annoying, less effective than lengthy ones
